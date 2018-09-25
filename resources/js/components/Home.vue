@@ -22,19 +22,19 @@
                 <a>sources</a>
                 <a>forks</a>
             </p>
-            <a class="panel-block">
-            <span class="column is-9">
-              bulma
-            </span>
-                <span class="panel-icon column is-1">
-                <i class="has-text-danger fa fa-trash" aria-hidden="true"></i>
-            </span>
-                <span class="panel-icon column is-1">
-                <i class="has-text-info fa fa-edit" aria-hidden="true"></i>
-            </span>
-                <span class="panel-icon column is-1">
-                <i class="has-text-primary fa fa-eye" aria-hidden="true"></i>
-            </span>
+            <a class="panel-block" v-for="item, key in lists">
+                <span class="column is-9">
+                  {{item.name}}
+                </span>
+                    <span class="panel-icon column is-1">
+                    <i class="has-text-danger fa fa-trash" aria-hidden="true"></i>
+                </span>
+                    <span class="panel-icon column is-1">
+                    <i class="has-text-info fa fa-edit" aria-hidden="true"></i>
+                </span>
+                    <span class="panel-icon column is-1">
+                    <i class="has-text-primary fa fa-eye" aria-hidden="true"></i>
+                </span>
             </a>
             <!--<label class="panel-block">-->
             <!--<input type="checkbox">-->
@@ -58,7 +58,20 @@
         data(){
             return {
                 addActive : '',
+                lists: {},
+                errors: {},
             }
+        },
+        mounted(){
+            axios.post('/getData')
+                .then((response) =>
+                        this.lists = response.data
+                    // console.log(response)
+                )
+                .catch((error) =>
+                        this.errors = error.response.data.errors
+                    // console.log(error)
+                );
         },
         methods:{
             openAdd(){
