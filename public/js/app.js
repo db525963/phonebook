@@ -46342,14 +46342,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 var Add = __webpack_require__(46);
+var Show = __webpack_require__(63);
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { Add: Add },
+    components: { Add: Add, Show: Show },
 
     data: function data() {
         return {
             addActive: '',
+            showActive: '',
             lists: {},
             errors: {}
         };
@@ -46372,8 +46375,13 @@ var Add = __webpack_require__(46);
         openAdd: function openAdd() {
             this.addActive = 'is-active';
         },
+        openShow: function openShow(key) {
+            // console.log(this.$children[1])
+            this.$children[1].list = this.lists[key];
+            this.showActive = 'is-active';
+        },
         close: function close() {
-            this.addActive = '';
+            this.addActive = this.showActive = '';
         }
     }
 });
@@ -46700,17 +46708,32 @@ var render = function() {
               _vm._v(" "),
               _vm._m(3, true),
               _vm._v(" "),
-              _vm._m(4, true)
+              _c("span", { staticClass: "panel-icon column is-1" }, [
+                _c("i", {
+                  staticClass: "has-text-primary fa fa-eye",
+                  attrs: { "aria-hidden": "true" },
+                  on: {
+                    click: function($event) {
+                      _vm.openShow(key)
+                    }
+                  }
+                })
+              ])
             ])
           }),
           _vm._v(" "),
-          _vm._m(5)
+          _vm._m(4)
         ],
         2
       ),
       _vm._v(" "),
       _c("Add", {
         attrs: { openmodal: _vm.addActive },
+        on: { closeRequest: _vm.close }
+      }),
+      _vm._v(" "),
+      _c("Show", {
+        attrs: { openmodal: _vm.showActive },
         on: { closeRequest: _vm.close }
       })
     ],
@@ -46772,17 +46795,6 @@ var staticRenderFns = [
     return _c("span", { staticClass: "panel-icon column is-1" }, [
       _c("i", {
         staticClass: "has-text-info fa fa-edit",
-        attrs: { "aria-hidden": "true" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "panel-icon column is-1" }, [
-      _c("i", {
-        staticClass: "has-text-primary fa fa-eye",
         attrs: { "aria-hidden": "true" }
       })
     ])
@@ -46897,6 +46909,230 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(64)
+/* template */
+var __vue_template__ = __webpack_require__(65)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Show.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e124e930", Component.options)
+  } else {
+    hotAPI.reload("data-v-e124e930", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['openmodal'],
+    data: function data() {
+        return {
+            list: ''
+        };
+    },
+
+    methods: {
+        close: function close() {
+            this.$emit('closeRequest');
+        },
+        save: function save() {
+            var _this = this;
+
+            axios.post('/phonebook', this.$data.list).then(function (response) {
+                return _this.close();
+            }
+            // console.log(response)
+            ).catch(function (error) {
+                return _this.errors = error.response.data.errors;
+            }
+            // console.log(error)
+            );
+        }
+    }
+});
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "modal", class: _vm.openmodal }, [
+    _c("div", { staticClass: "modal-background" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal-card" }, [
+      _c("header", { staticClass: "modal-card-head" }, [
+        _c("p", { staticClass: "modal-card-title" }, [_vm._v("Modal title")]),
+        _vm._v(" "),
+        _c("button", {
+          staticClass: "delete",
+          attrs: { "aria-label": "close" },
+          on: { click: _vm.close }
+        })
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "modal-card-body" }, [
+        _c("div", { staticClass: "field" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Name")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "control" }, [
+            _c("p", [_vm._v(_vm._s(_vm.list.name))])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Phone")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "control" }, [
+            _c("p", [_vm._v(_vm._s(_vm.list.phone))])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Email")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "control" }, [
+            _c("p", [_vm._v(_vm._s(_vm.list.email))])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "panel-block" }, [
+          _c("label", { staticClass: "column is-2" }, [_vm._v("Name")]),
+          _vm._v(_vm._s(_vm.list.name) + "\n            ")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "panel-block" }, [
+          _c("label", { staticClass: "column is-2" }, [_vm._v("Phone")]),
+          _vm._v(_vm._s(_vm.list.phone) + "\n            ")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "panel-block" }, [
+          _c("label", { staticClass: "column is-2" }, [_vm._v("Email")]),
+          _vm._v(_vm._s(_vm.list.email) + "\n            ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("footer", { staticClass: "modal-card-foot" }, [
+        _c(
+          "button",
+          { staticClass: "button is-success", on: { click: _vm.save } },
+          [_vm._v("Save changes")]
+        ),
+        _vm._v(" "),
+        _c("button", { staticClass: "button", on: { click: _vm.close } }, [
+          _vm._v("Cancel")
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e124e930", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
