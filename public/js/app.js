@@ -46344,6 +46344,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 var Add = __webpack_require__(46);
 var Show = __webpack_require__(63);
@@ -46358,7 +46359,8 @@ var Update = __webpack_require__(66);
             showActive: '',
             updateActive: '',
             lists: {},
-            errors: {}
+            errors: {},
+            loading: false
         };
     },
     mounted: function mounted() {
@@ -46391,6 +46393,23 @@ var Update = __webpack_require__(66);
         },
         close: function close() {
             this.addActive = this.showActive = this.updateActive = '';
+        },
+        del: function del(key, id) {
+            var _this2 = this;
+
+            this.loading = !this.loading;
+            if (confirm("Are you sure?")) {
+                axios.delete('/phonebook/' + id).then(function (response)
+                // this.lists = response.data,
+                // console.log('deleted')
+                {
+                    _this2.lists.splice(key, 1);_this2.loading = !_this2.loading;
+                }).catch(function (error) {
+                    return _this2.errors = error.response.data.errors;
+                }
+                // console.log(error)
+                );
+            }
         }
     }
 });
@@ -46698,7 +46717,13 @@ var render = function() {
                 on: { click: _vm.openAdd }
               },
               [_vm._v("\n                Add new\n            ")]
-            )
+            ),
+            _vm._v(" "),
+            _vm.loading
+              ? _c("span", { staticClass: "is-pulled-right" }, [
+                  _c("i", { staticClass: "fa fa-refresh fa-spin fa-2x fa-fw" })
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _vm._m(0),
@@ -46713,7 +46738,17 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(2, true),
+              _c("span", { staticClass: "panel-icon column is-1" }, [
+                _c("i", {
+                  staticClass: "has-text-danger fa fa-trash",
+                  attrs: { "aria-hidden": "true" },
+                  on: {
+                    click: function($event) {
+                      _vm.del(key, item.id)
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
               _c("span", { staticClass: "panel-icon column is-1" }, [
                 _c("i", {
@@ -46741,7 +46776,7 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _vm._m(3)
+          _vm._m(2)
         ],
         2
       ),
@@ -46799,17 +46834,6 @@ var staticRenderFns = [
       _c("a", [_vm._v("sources")]),
       _vm._v(" "),
       _c("a", [_vm._v("forks")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "panel-icon column is-1" }, [
-      _c("i", {
-        staticClass: "has-text-danger fa fa-trash",
-        attrs: { "aria-hidden": "true" }
-      })
     ])
   },
   function() {
