@@ -46532,6 +46532,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 // this.$parent.lists.push(this.$data.list)
                 _this.$parent.lists.push(response.data); //Go to PhonebookController store add return $pb
                 // console.log(response)
+                _this.$parent.lists.sort(function (a, b) {
+                    if (a.name > b.name) {
+                        return 1;
+                    } else if (a.name < b.name) {
+                        return -1;
+                    }
+                });
+                _this.list = "";
             }).catch(function (error) {
                 return _this.errors = error.response.data.errors;
             }

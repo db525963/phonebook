@@ -19,7 +19,7 @@ class PhonebookController extends Controller
     }
 
     public function getData(){
-        return Phonebook::orderBy('name', 'DESC')->get();
+        return Phonebook::orderBy('name', 'ASC')->get();
     }
     /**
      * Show the form for creating a new resource.
