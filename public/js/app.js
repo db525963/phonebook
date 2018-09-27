@@ -46528,10 +46528,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             axios.post('/phonebook', this.$data.list).then(function (response) {
-                return _this.close();
-            }
-            // console.log(response)
-            ).catch(function (error) {
+                _this.close();
+                // this.$parent.lists.push(this.$data.list)
+                _this.$parent.lists.push(response.data); //Go to PhonebookController store add return $pb
+                // console.log(response)
+            }).catch(function (error) {
                 return _this.errors = error.response.data.errors;
             }
             // console.log(error)

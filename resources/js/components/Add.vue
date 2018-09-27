@@ -57,8 +57,12 @@
             save(){
                 axios.post('/phonebook', this.$data.list)
                     .then((response) =>
-                        this.close()
-                        // console.log(response)
+                        {
+                            this.close()
+                            // this.$parent.lists.push(this.$data.list)
+                            this.$parent.lists.push(response.data) //Go to PhonebookController store add return $pb
+                            // console.log(response)
+                        }
                     )
                     .catch((error) =>
                         this.errors = error.response.data.errors
